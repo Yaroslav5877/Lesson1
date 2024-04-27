@@ -5,12 +5,12 @@ print_greeting()
 
 # Вариант №2
 def print_greeting_2():
-    text = input() 
+    text = "Привет, мир!2"
     print(text)
 print_greeting_2()
 
 # Вавриант №3
-text_2 = input() 
+text_2 = "Привет, мир!4" 
 def print_greeting_3():
     print(text_2)
 print_greeting_3()
