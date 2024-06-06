@@ -1,3 +1,4 @@
+from typing import Literal
 import pytest
 from string_utils import StringUtils
 
@@ -28,13 +29,14 @@ def test_trim():
 
 
 """"to_list"""
-@pytest.mark.parametrize('string, delimeter, result', [
+
+@pytest.mark.parametrize("string, delimeter, result", [
     #POSITIVE
     ("яблоко, банан, апельсин", ",", ["яблоко", "банан", "апельсин"]),
     ("1, 2, 3, 4, 5", ",", ["1", "2", "3", "4", "5"]),
     #NEGATIVE
     ("", None, []),
-    ("1, 2, 3, 4  5", "None", ["1", "2", "3", "4  5"]),
+    ("1, 2, 3, 4  5", None, ["1", "2", "3", "4  5"]),
 ])
 def test_to_list(string, delimeter, result):
     if delimeter is None:
@@ -46,7 +48,7 @@ def test_to_list(string, delimeter, result):
 
 
 """"contains"""
-@pytest.mark.parametrize('string, stmbol, result', [
+@pytest.mark.parametrize('string, symbol, result', [
     ("банан", "б", True),
     ("дом", "о", True),
     ("ком", "м", True),
@@ -57,7 +59,7 @@ def test_to_list(string, delimeter, result):
     ("снег", "*", False),
     ("123456", "Ж", False),
 ])
-def test_contains(string, symbol, result):
+def test_contains(string: Literal['банан'] | Literal['дом'] | Literal['ком'] | Literal['динь-донь'] | Literal['123546'] | Literal['Город'] | Literal['снег'] | Literal['123456'], symbol, result: bool):
     res = utils.contains(string, symbol)
     assert res == result
     
@@ -74,7 +76,7 @@ def test_contains(string, symbol, result):
     ("", "", "33"),
     ("live", "", "live")
 ])
-def test_delete_symbol(string, symbol, result):
+def test_delete_symbol(string: Literal['дверь'] | Literal['Ярик'] | Literal['12345'] | Literal['дом'] | Literal[''] | Literal['live'], symbol: Literal['д'] | Literal['и'] | Literal['Я'] | Literal['3'] | Literal['к'] | Literal[''], result: Literal['верь'] | Literal['Ярк'] | Literal['рик'] | Literal['1245'] | Literal['дом'] | Literal[''] | Literal['33'] | Literal['live']):
     res = utils.delete_symbol(string, symbol, result)
     assert res == result
     
@@ -93,7 +95,7 @@ def test_delete_symbol(string, symbol, result):
     ("Ярик", "y", False),
     ("12345", "0", False)  
 ])
-def test_starts_with(string, symbol, result):
+def test_starts_with(string: Literal['дверь'] | Literal['Ярик'] | Literal['live'] | Literal['Проспект-Мира'] | Literal['123456'] | Literal['12345'], symbol: Literal['д'] | Literal['Я'] | Literal['l'] | Literal['П'] | Literal['1'] | Literal['Д'] | Literal['я'] | Literal['y'] | Literal['0'], result: bool):
     res = utils.starts_with(string, symbol)
     assert res == result
 
@@ -112,14 +114,14 @@ def test_starts_with(string, symbol, result):
     ("Ярик", "Y", False),
     ("12345", "4", False), 
 ])
-def test_end_with(string, symbol, result):
+def test_end_with(string: Literal['Yarik'] | Literal['live'] | Literal['95'] | Literal['Агент007'] | Literal['дверь'] | Literal['Ярик'] | Literal['12345'], symbol: Literal['k'] | Literal['e'] | Literal['5'] | Literal['7'] | Literal['Ь'] | Literal['и'] | Literal['Y'] | Literal['4'], result: bool):
     res = utils.end_with(string, symbol)
     assert res == result
     
     
 
 """is_empty"""
-@pytest.mark.parametrize('string, result' [
+@pytest.mark.parametrize('string, result', [
     ("", True),
     (" ", True),
     ("   ", True),
@@ -143,7 +145,7 @@ def test_is_empty(string, result):
     ([], 'Кино', "")
     
 ])
-def test_list_to_string(lst, joiner, result):
+def test_list_to_string(lst: list[str] | list[int], joiner: None | Literal[','] | Literal['-'] | Literal['Кино'], result: Literal['s,o,s'] | Literal['1, 2, 3, 4, 5, 6, 7'] | Literal['Один-Два'] | Literal['']):
     if joiner == None:
         res = utils.list_to_string(lst)
     else:
